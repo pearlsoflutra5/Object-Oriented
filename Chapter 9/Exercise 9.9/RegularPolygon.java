@@ -1,7 +1,7 @@
 /*
 Kacie Rae
-1-22-19
-Exercise 9.7 creating an Account object class
+1-23-19
+Exercise 9.9 creating a RegularPolygon class. 
 
 UML Diagram
 ---------------

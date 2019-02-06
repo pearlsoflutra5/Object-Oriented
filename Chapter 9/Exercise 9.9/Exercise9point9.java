@@ -1,3 +1,9 @@
+/*
+Kacie Rae 
+1-23-19
+Exercise 9.9 calling the RegularPolygon class, printing perimeter and area. 
+*/
+
 class Exercise9point9 {
 	public static void main(String[] args) {
 		RegularPolygon p1 = new RegularPolygon(6, 4);

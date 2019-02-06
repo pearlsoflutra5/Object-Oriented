@@ -1,6 +1,6 @@
 /*
 Kacie Rae
-1-16-19
+1-17-19
 Exercise 9.1 creating a rectangle object class
 
 UML Diagram
