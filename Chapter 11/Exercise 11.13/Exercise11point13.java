@@ -1,7 +1,7 @@
 /*
 Kacie Rae
 2-13-19
-Exercise 11.13
+Exercise 11.13 removing duplicates in an Integer ArrayList
 */
 
 import java.util.Scanner;
@@ -34,4 +34,7 @@ class Exercise11point13 {
 			}
 		}
 	}
+	
+	
+	
 }
