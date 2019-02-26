@@ -10,7 +10,7 @@ import java.net.URL;
 class Exercise12point19 {
 	public static void main(String[] args) {
 		try{
-			URL url = new URL("http://www.google.com/index.html");
+			URL url = new URL("http://cs.armstrong.edu/liang/Lincoln.txt");
 			Scanner input = new Scanner(url.openStream());
 			int words = 0;
 			int count = 0;
