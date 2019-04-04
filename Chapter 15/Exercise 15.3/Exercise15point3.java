@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 
 
 
- public class Exercise15point3 extends Application {
+public class Exercise15point3 extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
