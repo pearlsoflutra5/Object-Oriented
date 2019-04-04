@@ -4,25 +4,37 @@ Kacie Rae
 Exercise 14.15 Creating an octagon in JavaFx Interface.
 */
 
+//need these for pretty much everything
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.layout.*;
+
+//need these for polygon stuff
 import javafx.scene.shape.Polygon;
-import javax.xml.soap.*;
-import java.awt.*;
+import javafx.collections.ObservableList;
 import javafx.scene.text.Text; 
 import javafx.scene.text.Font;
+import javafx.scene.paint.Color;
+
+//sometimes import javafx.scene.control.*; will have awt in int for buttons and stuff
+import javax.xml.soap.*;
+import java.awt.*;
 
 public class ShowPolygon extends Application {
 	@Override // Override the start method in the Application class
 	public void start(Stage primaryStage) {   
 		// Create a scene and place it in the stage
+		Pane pane = new StackPane();
+		pane.getChildren().add(new MyPolygon());
+		
+		Label label = new Label("Stop");
+		label.setFont(Font.font("Times New Roman", 100));
+		pane.getChildren().add(label);
 		
 
-		Scene scene = new Scene(new MyPolygon(), 400, 400);
+		//Scene scene = new Scene(new MyPolygon(), 400, 400);
+		Scene scene = new Scene(pane);
 		primaryStage.setTitle("ShowPolygon"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene in the stage
 		primaryStage.show(); // Display the stage
@@ -57,12 +69,12 @@ class MyPolygon extends Pane {
 		} 
 		polygon.setRotate(22.5);
 		
-		Text text = new Text(70, 230, "STOP");
+		/*Text text = new Text(70, 230, "STOP");
 		text.setFont(Font.font(100));
 		text.setFill(Color.WHITE);
 		
 		getChildren().clear();
-		getChildren().addAll(polygon, text);
+		getChildren().addAll(polygon, text);*/
 	}
 		
 		@Override
