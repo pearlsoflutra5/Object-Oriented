@@ -40,11 +40,11 @@ public class Exercise15point3 extends Application {
 		buttons.setSpacing(10);
 		buttons.setPadding(new Insets(10, 10, 10, 10));
 				
-		BorderPane pane = new BorderPane();
-		pane.setCenter(movingCircle);
-		pane.setBottom(buttons);
+		BorderPane border = new BorderPane();
+		border.setCenter(movingCircle);
+		border.setBottom(buttons);
 
-		Scene scene = new Scene(pane, 400, 400);
+		Scene scene = new Scene(border, 400, 400);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Click to move the ball.");
 		primaryStage.show();	
