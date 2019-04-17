@@ -1,2 +1,2 @@
 # Object Oriented
-## Programmign Cohort with SouthWest Tech
+## Programmign Cohort with Southwest Tech
