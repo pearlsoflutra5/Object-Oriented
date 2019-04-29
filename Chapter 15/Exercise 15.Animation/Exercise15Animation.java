@@ -37,7 +37,7 @@ public class Exercise15Animation extends Application {
 			
 	public static void main(String[] args) {
 		launch(args);
-	}
+	} 
 }
 
 class MovingRectangle extends Pane {		
