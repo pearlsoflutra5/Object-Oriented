@@ -14,13 +14,19 @@ class Exercise18point3 {
 		System.out.print("What is your second number: ");
 		int n = input.nextInt();
 		
+		System.out.println("The Greatest Common Divisor of " + m + " and " + n +  " is " + gcd(m, n));
 		
-		if (m % n == 0){
-			System.out.println("The Greatest Common Divisor is " + n); 
-		}
-		else {
-			System.out.println("The Greatest Common Divisor is "  + (m%n));
-		}
+		
 		
 	}
+	public static int gcd(int m, int n) { 
+		if(m % n == 0){
+			return n;
+		}
+		else {
+			return gcd(n, m%n);
+		}	
+	}
+	
+	
 }
