@@ -4,6 +4,10 @@ Kacie Rae
 Final Project: Chaser game with an emoji face that eats food and dodges obstacles.
 
 All the images are By Twitter, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=(37288034 through 37288142)
+
+Music by Alexander Blu, CC BY 4.0, http://www.orangefreesounds.com/aggressive-electronic-dubstep-track/
+Sound effects by Alexander Blu, CC BY 4.0, http://www.orangefreesounds.com/winning-sound-effect/, http://www.orangefreesounds.com/wha-wha-wha-sound-effect/
+
 */
 import java.util.Random;
 import java.lang.String;
@@ -11,6 +15,7 @@ import javax.xml.soap.*;
 import java.awt.*;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Application;
+import java.io.File; 
 import java.io.FileInputStream; 
 import java.io.FileNotFoundException;
 import javafx.stage.Stage;
@@ -29,7 +34,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.animation.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -40,25 +44,35 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javax.swing.plaf.basic.*;
 
-
-
 public class FinalProjectChaserGame extends Application {
 	public Chaser chaser;
 	public Food food;
 	public Text score;
+	public long food1;	
+	public long food2;
+	
+	MediaPlayer music = new MediaPlayer(new Media(new File("sounds/background.mp3").toURI().toString()));
+	MediaPlayer win = new MediaPlayer(new Media(new File("sounds/win.mp3").toURI().toString()));
+	MediaPlayer lose = new MediaPlayer(new Media(new File("sounds/lose.mp3").toURI().toString()));
+	
 
 	@Override 
 		public void start(Stage primaryStage) {
+			music.setCycleCount(MediaPlayer.INDEFINITE);
+			music.play();
 			this.chaser = new Chaser();	
 			this.food = new Food();		
 			Pane gamePane = new Pane();
-			gamePane.setPadding(new Insets(0, 10, 5, 10));
-			gamePane.setStyle("-fx-border-color: blue");
 			gamePane.getChildren().addAll(this.food, this.chaser);
+			
+			music.pause();
+				win.play();
+			music.play();
 			
 			HBox hBox = new HBox(10);
 			hBox.setAlignment(Pos.CENTER);
-			hBox.setStyle("-fx-border-color: green");
+			hBox.setPadding(new Insets(3, 10, 3, 10));
+			hBox.setStyle("-fx-border-color: blue");
 			Button restart = new Button("Restart");
 			this.score = new Text("0");
 			hBox.getChildren().addAll(restart, this.score);	
@@ -66,6 +80,8 @@ public class FinalProjectChaserGame extends Application {
 			restart.setOnAction(new EventHandler<ActionEvent>() {
 				@Override public void handle(ActionEvent e) {
 					chaser.restart();
+					food.restart();
+					score.setText(chaser.scoreT + "");					
 				}
 			});
 			
@@ -88,29 +104,39 @@ public class FinalProjectChaserGame extends Application {
 			pane.requestFocus();
 			scene.addEventFilter(KeyEvent.ANY, keyEvent -> {
 				pointGain();
-			});
+			}); 
+						
 	}
 	
 	public void pointGain() {
-			long mTime = System.currentTimeMillis();
-			long end = mTime + 5000; 
-			long scoreT = 0;
-			if((chaser.face.getX() == food.food.getX()) && (chaser.face.getY() == food.food.getY())) {
-				scoreT++;
-				score.setText(Long.toString(scoreT));			
-				food.die();
-			}
-			else {
-				return;
-			}	
+		food1 = chaser.scoreT;
+		score.setText(Long.toString(chaser.scoreT));
+		if((chaser.face.getX() == food.food.getX()) && (chaser.face.getY() == food.food.getY())) {
+			chaser.scoreT++;
+			score.setText(chaser.scoreT + "");		
+			food.die();			
+		}
+		else {
+			return;
+		}	
 	} 
+	public long win(){
+		if((chaser.face.getX() == food.food.getX()) && (chaser.face.getY() == food.food.getY())) {
+			return chaser.scoreT;
+		}
+		else{
+			return 0;
+		}	
+	}
 	public static void main(String[] args) throws FileNotFoundException {
 		launch(args);
-	}
-		
+	}		
 }
+
+
 //--------------------------------CHASER-------------------------------------------------
 class Chaser extends Pane {
+	public long scoreT = 0;
 	public ImageView face;
 	public Chaser() {
 		try {
@@ -125,8 +151,8 @@ class Chaser extends Pane {
 	}
 	
 	public void down(){
-		if(this.face.getY() > 410) return;
-		this.face.setY(this.face.getY() + 10);
+		if(this.face.getY() > 405) return;
+		this.face.setY(this.face.getY() + 10); 
 	}
 	public void up(){
 		if(this.face.getY() < 10) return;
@@ -154,6 +180,7 @@ class Chaser extends Pane {
 		}		
 	}
 	public void restart(){
+		this.scoreT = 0;
 		getChildren().remove(this.face);
 		start();			
 	}	
@@ -184,7 +211,7 @@ class Food extends Pane {
 			String foodImg = foodPicker();
 			this.food = new ImageView(new Image(foodImg));
 			int randFoodX = (int)(Math.random() * 300 + 50);
-			int randFoodY = (int)(Math.random() * 390 + 50);
+			int randFoodY = (int)(Math.random() * 380 + 50);
 			if((randFoodX % 10.0 != 0) || (randFoodY % 10 != 0)){
 				if(randFoodX % 10 != 0){
 					while(randFoodX % 10 != 0){
@@ -205,28 +232,33 @@ class Food extends Pane {
 			getChildren().add(this.food);
 	}
 	public void start(){			
-				String foodImg = foodPicker();
-				this.food = new ImageView(new Image(foodImg));
-				int randFoodX = (int)(Math.random() * 300 + 50);
-				int randFoodY = (int)(Math.random() * 300 + 50);
-				if((randFoodX % 10.0 != 0) || (randFoodY % 10 != 0)){
-					if(randFoodX % 10 != 0){
-						while(randFoodX % 10 != 0){
-							randFoodX--;
-						}			
-					}
-					if(randFoodY % 10 != 0){
-						while(randFoodY % 10 != 0){
-							randFoodY--;
-						}
-					}
+		String foodImg = foodPicker();
+		this.food = new ImageView(new Image(foodImg));
+		int randFoodX = (int)(Math.random() * 300 + 50);
+		int randFoodY = (int)(Math.random() * 300 + 50);
+		if((randFoodX % 10.0 != 0) || (randFoodY % 10 != 0)){
+			if(randFoodX % 10 != 0){
+				while(randFoodX % 10 != 0){
+					randFoodX--;
+				}			
+			}
+			if(randFoodY % 10 != 0){
+				while(randFoodY % 10 != 0){
+					randFoodY--;
 				}
-				this.food.setX(randFoodX);
-				this.food.setY(randFoodY);
-				this.food.setFitHeight(50);
-				this.food.setFitWidth(50);
-				getChildren().add(this.food);	
+			}
 		}
+		this.food.setX(randFoodX);
+		this.food.setY(randFoodY);
+		this.food.setFitHeight(50);
+		this.food.setFitWidth(50);
+		getChildren().add(this.food);	
+	}
+	public void restart(){
+		getChildren().remove(this.food);
+		start();
+	}
+	
 	public void die(){
 		getChildren().remove(this.food);
 		start();
